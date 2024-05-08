@@ -1,0 +1,38 @@
+{% extends 'dashboard/base.html' %} 
+{% load static %} 
+{% block content %}
+{% load crispy_forms_tags %}
+<section class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center">Search Videos on YouTube</h2>
+            <p class="text-center">Search for videos and select any video to open in YouTube</p>
+            <form action="" method="post" class="mb-4">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-danger" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        {% for result in result %}
+        <div class="col-md-8 mb-4">
+            <div class="card">
+                <a href="{{ result.link }}" target="_blank">
+                    <img src="{{ result.thumbnail }}" class="card-img-top" alt="{{ result.title }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ result.title }}</h5>
+                    <p class="card-text">{{ result.description }}</p>
+                    <p class="card-text">Channel: {{ result.channel }}</p>
+                    <p class="card-text">Duration: {{ result.duration }}</p>
+                    <p class="card-text">Views: {{ result.views }}</p>
+                    <p class="card-text">Published: {{ result.published }}</p>
+                    <a href="{{ result.link }}" target="_blank" class="btn btn-primary">Watch on YouTube</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}
